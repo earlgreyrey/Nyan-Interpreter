@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void (*fps[9])(INST);
+void (*fps[10])(INST);
 char mem[1024] = { 0, };
 
 stack<JINFO> jump_index;
@@ -130,17 +130,21 @@ void printInst(int i){
 	int len = insts[i].len;
 	InstType inst = insts[i].T;
 	bool longInst = false;
-	if(len > 15){
-		len = 7;
+	if(len > 10){
+		len = 6;
 		longInst = true;
 	}
 	switch(inst){
+		case INST_NOP:
+			printf("NOP");
+			printf("%*s\t", 12-len, "");
+		break;
 		case INST_NYAN:
 		case INST_NYUN:
 			printf("Ny");
 			if(inst == INST_NYAN){
 				if(longInst){
-					printf(" a*%4d ", insts[i].len);
+					printf("a*%d", insts[i].len);
 				}
 				else{
 					for(int j = 0; j < len; j++){
@@ -150,7 +154,7 @@ void printInst(int i){
 			}
 			else{
 				if(longInst){
-					printf(" u*%4d ", insts[i].len);
+					printf("u*%d", insts[i].len);
 				}
 				else{
 					for(int j = 0; j < len; j++){
@@ -158,7 +162,7 @@ void printInst(int i){
 					}
 				}
 			}
-			printf("n%*s", 16-len, "");
+			printf("n%*s\t", 12-len, "");
 		break;
 
 		case INST_MEOW:
@@ -169,83 +173,88 @@ void printInst(int i){
 			}
 
 			if(longInst){
-				printf(" o*%4d ", insts[i].len);
+				printf("o*%d", insts[i].len);
 			}
 			else{
 				for(int j = 0; j < len; j++){
 					printf("o");
 				}
 			}
-			printf("w%*s", 16-len, "");
+			printf("w%*s\t", 12-len, "");
 		break;
 
 		case INST_REP:
 			if(longInst){
-				printf(".*%4d", insts[i].len);
+				printf(".*%d", insts[i].len);
 			}
 			else{
 				for(int j = 0; j < len; j++){
 					printf(".");
 				}
 			}
-			printf("%*s", 18-len, "");
+			printf("%*s\t", 14-len, "");
 		break;
 
 		case INST_HISS:
 			printf("His");
 			if(longInst){
-				printf("s*%4d", insts[i].len);
+				printf("s%d", insts[i].len);
 			}
 			else{
 				for(int j = 0; j < len; j++){
 					printf("s");
 				}
 			}
-			printf("%*s", 16-len, "");
+			printf("%*s\t", 12-len, "");
 		break;
 
 		case INST_PURR:
 			printf("Pur");
 			if(longInst){
-				printf("r*%4d", insts[i].len);
+				printf("r*%d", insts[i].len);
 			}
 			else{
 				for(int j = 0; j < len; j++){
 					printf("r");
 				}
 			}
-			printf("%*s", 16-len, "");
+			printf("%*s\t", 8-len, "");
 		break;
 
 		case INST_REPSTART:
 			printf("Eh");
 			if(longInst){
-				printf(".*%4d\n", insts[i].len);
+				printf(".*%d", insts[i].len);
 			}
 			else{
 				for(int j = 0; j < len; j++){
 					printf(".");
 				}
 			}
-			printf("%*s", 16-len, "");
+			printf("%*s\t", 12-len, "");
 		break;
 
 		case INST_REPEND:
 			printf("~");
-			printf("%*s", 16-len, "");
+			printf("%*s\t", 12-len, "");
 
 		break;
 	}
 }
 
+void invalid(INST inst){
+	printf("ERROR");
+}
+
 void InitVector(){
-	fps[0] = nyan;
-	fps[1] = nyun;
-	fps[2] = meow;
-	fps[3] = mow;
-	fps[4] = rep;
-	fps[5] = hiss;
-	fps[6] = purr;
-	fps[7] = repstart;
-	fps[8] = repend;
+	fps[0] = invalid;
+	fps[1] = nyan;
+	fps[2] = nyun;
+	fps[3] = meow;
+	fps[4] = mow;
+	fps[5] = rep;
+	fps[6] = hiss;
+	fps[7] = purr;
+	fps[8] = repstart;
+	fps[9] = repend;
 }

@@ -1,13 +1,14 @@
 typedef enum {
-	INST_NYAN = 0,
-	INST_NYUN = 1,
-	INST_MEOW = 2,
-	INST_MOW = 3,
-	INST_REP = 4,
-	INST_HISS = 5,
-	INST_PURR = 6,
-	INST_REPSTART = 7,
-	INST_REPEND = 8
+	INST_NOP = 0,
+	INST_NYAN = 1,
+	INST_NYUN = 2,
+	INST_MEOW = 3,
+	INST_MOW = 4,
+	INST_REP = 5,
+	INST_HISS = 6,
+	INST_PURR = 7,
+	INST_REPSTART = 8,
+	INST_REPEND = 9
 } InstType;
 
 
@@ -21,7 +22,7 @@ typedef struct jumpinfo{
 	int len;
 } JINFO;
 
-extern void (*fps[9])(INST);
+extern void (*fps[10])(INST);
 extern INST insts[1024];
 extern char out[1024];
 
