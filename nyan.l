@@ -48,7 +48,6 @@ Eh[.]+			{
 					insts[pointer].T = INST_REPSTART;
 					insts[pointer].len = strlen(yytext)-2;
 					pointer++;
-					printf("rep len : %d\n", strlen(yytext)-2);
 				}
 \~				{
 					insts[pointer].T = INST_REPEND;
@@ -65,8 +64,10 @@ int main(){
 
 	for(ip = 0; ip  < pointer; ip++){
 		INST it = insts[ip];
-		//printf("Inst : %d, Size : %d\n", it.T, it.len);
 		fps[it.T](it);
+		printState();
 	}
+
+	printf("OUTPUT: %s\n", out);
 
 }

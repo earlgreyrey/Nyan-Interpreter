@@ -10,6 +10,7 @@ typedef enum {
 	INST_REPEND = 8
 } InstType;
 
+
 typedef struct instruction {
 	InstType T;
 	int len;
@@ -22,9 +23,11 @@ typedef struct jumpinfo{
 
 extern void (*fps[9])(INST);
 extern INST insts[1024];
+extern char out[1024];
 
 void InitVector();
-void printstate();
+void printState();
+void printInst(int i);
 
 extern int sp;
 extern int ip;
